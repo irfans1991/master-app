@@ -2,8 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Inertia\Middleware;
+use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -37,8 +40,38 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             //
-            'user.auth' => "Adamsan" ?? null,
-            'app.name' => "E-report",
+            // 'user.auth' => "Adamsan" ?? null,
+            // 'app.name' => "E-report",
+
+            // 'auth.user' => fn () => $request->user() ? new UserResource($request->user()) : null,
+
+                'auth' => [
+                    'user' => $request->user() ? new UserResource($request->user()) : null,
+                    'roles' => $request->user() ? $request->user()->getRoleNames() : [],
+                    'permissions' => $request->user() ? $request->user()->getAllPermissions()->pluck('name') : [],
+                ],
+            'ziggy' => function () use ($request) {
+                return array_merge($request->all(), [
+                    'location' => $request->url(),
+                ]);
+            },
+
+            // 'auth.user' => fn () => $request->user() ? $request->user()->only('id', 'name', 'email') : null,
+        ]);
+
+        Inertia::share([
+            'success' => fn() => $request->session()->get('success'),
         ]);
     }
+
+    public function render($request, Throwable $exception)
+{
+    if ($exception instanceof HttpException && $exception->getStatusCode() === 403) {
+        return Inertia::render('Errors/403')
+            ->toResponse($request)
+            ->setStatusCode(403);
+    }
+
+    return parent::render($request, $exception);
+}
 }

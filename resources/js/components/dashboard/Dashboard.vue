@@ -1,111 +1,66 @@
+<script setup>
+import Time from '../utils/Time.vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { Link, router, usePage} from '@inertiajs/vue3'
+import { computed } from 'vue'
+
+//count Report
+const page  = usePage(); // Get data from Laravel
+const reports = computed(() => page.props.countReport);
+const countVerified = computed(() => page.props.countVerified);
+const countPending = computed(() => page.props.countPending);
+
+const show = ref(true)
+
+onMounted(() => {
+ show.value = false
+})
+
+onUnmounted(() => {
+  show.value = true
+})
+</script>
+
+<style>
+
+</style>
+
 <template>
-    <div class="p-4 sm:ml-64">
-        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-            <div class="grid grid-cols-3 gap-4 mb-4">
-                <div
-                    class="flex items-center justify-center h-24 rounded-lg bg-gray-50 dark:bg-gray-600"
-                >
+    <Transition name="slide-fade">
+    <div class="container mx-auto max-w-screen-xl lg:px-6 py-2.5" v-if="!show">
+      <div class="flex justify-between">
+         <h1 class="text-2xl font-semibold text-gray-200 w-2/12 bg-blue-900 text-center rounded-t-lg ">{{$page.component}}</h1>
+         <Time />
+      </div>
+         <div class="p-4 bg-gray-300 shadow-md rounded-b-lg rounded-r-lg">
+            <div class="grid grid-cols-3 gap-4 mb-4 ">
+               <div class="flex items-center justify-center h-24 rounded-md bg-gray-100 shadow-md ">
                     <dl>
-                        <dt
-                            class="w-8 h-8 rounded-full bg-orange-100 dark:bg-gray-500 text-orange-600 dark:text-orange-300 text-sm font-medium flex items-center justify-center mb-1"
-                        >
-                            12
-                        </dt>
-                        <dd
-                            class="text-orange-600 dark:text-orange-300 text-sm font-medium"
-                        >
-                            To do
+                        <dt class="w-8 h-8 rounded-full bg-orange-100 dark:bg-gray-500 text-orange-600 dark:text-orange-300 text-sm font-medium flex items-center justify-center mb-1" >{{ reports }}</dt>
+                        <dd class="text-orange-600 dark:text-orange-300 text-sm font-medium" >
+                            Document
                         </dd>
                     </dl>
                 </div>
-                <div
-                    class="flex items-center justify-center h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
+                <div class="flex items-center justify-center h-24 rounded-md bg-gray-100 shadow-md ">
                    <dl class="flex flex-col items-center justify-center">
-                     <dt class="w-8 h-8 rounded-full bg-teal-100 dark:bg-gray-500 text-teal-600 dark:text-teal-300 text-sm font-medium flex items-center justify-center mb-1">23</dt>
-                     <dd class="text-teal-600 dark:text-teal-300 text-sm font-medium">In progress</dd>
+                     <dt class="w-8 h-8 rounded-full bg-emerald-400  text-white text-sm font-medium flex items-center justify-center mb-1">{{countVerified}}</dt>
+                     <dd class="text-emerald-500 text-sm font-medium">Verified</dd>
                    </dl>
                 </div>
-                <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
+                <div class="flex items-center justify-center h-24 rounded-md bg-gray-100 shadow-md ">
                   <dl class="flex flex-col items-center justify-center">
-                     <dt class="w-8 h-8 rounded-full bg-blue-100 dark:bg-gray-500 text-blue-600 dark:text-blue-300 text-sm font-medium flex items-center justify-center mb-1">64</dt>
-                     <dd class="text-blue-600 dark:text-blue-300 text-sm font-medium">Done</dd>
+                     <dt class="w-8 h-8 rounded-full bg-amber-400 text-white  text-sm font-medium flex items-center justify-center mb-1">{{countPending}}</dt>
+                     <dd class="text-amber-400 text-sm font-medium">Pending</dd>
                   </dl>
                 </div>
             </div>
-            <!-- <div class="flex items-center justify-center h-48 mb-4 rounded-sm bg-gray-50 dark:bg-gray-800">
-              <p class="text-2xl text-gray-400 dark:text-gray-500">
-                 <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                 </svg>
-              </p>
-           </div> -->
-            <!-- <div class="grid grid-cols-2 gap-4 mb-4">
-              <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800">
-                 <p class="text-2xl text-gray-400 dark:text-gray-500">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                 </p>
-              </div>
-              <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800">
-                 <p class="text-2xl text-gray-400 dark:text-gray-500">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                 </p>
-              </div>
-              <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800">
-                 <p class="text-2xl text-gray-400 dark:text-gray-500">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                 </p>
-              </div>
-              <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800">
-                 <p class="text-2xl text-gray-400 dark:text-gray-500">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                 </p>
-              </div>
-           </div> -->
-            <!-- <div class="flex items-center justify-center h-48 mb-4 rounded-sm bg-gray-50 dark:bg-gray-800">
-              <p class="text-2xl text-gray-400 dark:text-gray-500">
-                 <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                 </svg>
-              </p>
-           </div>
-           <div class="grid grid-cols-2 gap-4">
-              <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800">
-                 <p class="text-2xl text-gray-400 dark:text-gray-500">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                 </p>
-              </div>
-              <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800">
-                 <p class="text-2xl text-gray-400 dark:text-gray-500">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                 </p>
-              </div>
-              <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800">
-                 <p class="text-2xl text-gray-400 dark:text-gray-500">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                 </p>
-              </div>
-              <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800">
-                 <p class="text-2xl text-gray-400 dark:text-gray-500">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                 </p>
-              </div>
-           </div> -->
         </div>
     </div>
+    </Transition>
+
+    <!-- <button @click="show = !show">Toggle Slide + Fade</button>
+  <Transition name="slide-fade">
+    <p v-if="show">hello</p>
+  </Transition> -->
 </template>

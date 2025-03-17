@@ -1,12 +1,6 @@
 <script setup>
-// import demo from '../Layouts/Demo.vue'
-// import sidebar from '../Layouts/Sidebar.vue'
-// import header from '../Layouts/Header.vue'
-// import Header from '../components/Header.vue'
-// import Sidebar from '../components/Sidebar.vue'
-import Navbar from '../components/Navbar.vue'
-import Sidebar from '../components/Sidebar.vue' 
 import Dashboard from '../components/dashboard/Dashboard.vue'
+import Header from '../Layouts/Header.vue'
 // defineOptions({
 //     // layout: demo,
 //     // layout: header
@@ -14,13 +8,8 @@ import Dashboard from '../components/dashboard/Dashboard.vue'
 </script>
 
 <template>
-    <Head title="Dashboard"/>
-    <Navbar>
-        <template #navbar-header-name>
-            <a href="tel:5541251234" class="text-sm  text-gray-500 dark:text-white hover:underline">Adamsan</a>
-        </template>
-    </Navbar>
-    <Sidebar/>
+    <Head title="Home"/>
+    <Header/>
     <Dashboard/>
 
 
@@ -34,7 +23,7 @@ import Dashboard from '../components/dashboard/Dashboard.vue'
             <Header></Header>
             <div class="w-full h-[calc(100vh-50px)]">
                 <div class="w-full h-full text-center">
-                    <h1>Hello , {{$page.props.user.auth}} </h1>
+                    <h1>Hello , {{$page.props.auth.user.name}} </h1>
                     <h1>{{ $page.component }}</h1>
                 </div>
             </div>

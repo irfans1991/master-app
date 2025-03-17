@@ -106,7 +106,7 @@ onMounted(() => {
                   <!-- <slot name="navbar-header-name">
                     No-name
                   </slot> -->
-                  <a href="tel:5541251234" class="text-sm  text-gray-500 dark:text-white hover:underline">Hello, {{ $page.props.user.auth }}</a>
+                  <a href="tel:5541251234" class="text-sm  text-gray-500 dark:text-white hover:underline">Hello, {{ $page.props.auth.user.name }}</a>
 
                   <a href="#" class="text-sm  text-blue-600 dark:text-blue-500 hover:underline">{{ currentDate }} - {{ currentTime }}</a>
               </div>
