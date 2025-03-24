@@ -149,7 +149,7 @@ watch(checked, (value) => {
                             <Column field="name" header="Name" style="width: 10%"></Column>
                             <Column field="" header="Date" style="width: 10%">
                                 <template #body="slotProps">
-                                    {{ formatDate(slotProps.data.created_at) }}
+                                    {{ formatDate(slotProps.data.date_report) }}
                                 </template>
                             </Column>
                             <Column field="" header="Report" style="width: 5%">

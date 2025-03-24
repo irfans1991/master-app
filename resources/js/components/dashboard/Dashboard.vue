@@ -3,12 +3,15 @@ import Time from '../utils/Time.vue'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { Link, router, usePage} from '@inertiajs/vue3'
 import { computed } from 'vue'
+import Message from 'primevue/message'
 
 //count Report
 const page  = usePage(); // Get data from Laravel
 const reports = computed(() => page.props.countReport);
 const countVerified = computed(() => page.props.countVerified);
 const countPending = computed(() => page.props.countPending);
+const countPendingDept = computed(() => page.props.countPendingDept);
+
 
 const show = ref(true)
 
@@ -28,6 +31,13 @@ onUnmounted(() => {
 <template>
     <Transition name="slide-fade">
     <div class="container mx-auto max-w-screen-xl lg:px-6 py-2.5" v-if="!show">
+      <div class="card container mx-auto max-w-screen-xl lg:px-6 py-2.5">
+        <Message severity="warn" closable>
+                <i class="pi pi-info-circle text-blue-900"><span class="text-md pl-2 text-blue-900 font-sans">Informasi</span></i>
+                <p class="text-md text-blue-900">Selamat Datang, <span class="font-semibold italic">{{ $page.props.auth.user.firstname }}</span> di Aplikasi E-report PT. Chen Woo Fishery </p>
+                <p class="text-md text-blue-900">Anda Memiliki Laporan Pending : {{ countPendingDept }} Laporan, dari Departement {{ $page.props.auth.user.department }} </p>
+        </Message>
+    </div>
       <div class="flex justify-between">
          <h1 class="text-2xl font-semibold text-gray-200 w-2/12 bg-blue-900 text-center rounded-t-lg ">{{$page.component}}</h1>
          <Time />

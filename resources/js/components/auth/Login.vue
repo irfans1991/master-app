@@ -29,7 +29,7 @@ const
 <template>
     <Head title="Sign in"/>
     <section class="bg-gray-50">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div class="flex flex-col items-center justify-center px-6 py-4 mx-auto md:h-screen lg:py-0">
             <a href="#" class="flex items-center text-2xl font-semibold text-gray-900 dark:text-gray-700 mb-4">
                 <img class="w-32" src="../../../img/e-report.png" alt="logo">
             </a>

@@ -1,17 +1,55 @@
 <script setup>
-import Time from "../components/utils/Time.vue"
 import Header from '../Layouts/Header.vue';
+import Content from "../components/Content.vue";
+import { ref, onMounted, onUnmounted } from 'vue';
+import { GoogleMap, Marker } from 'vue3-google-map'
     defineProps({
         name: String,
         age: Number
     })
+
+    const show = ref(true)
+
+onMounted(() => {
+show.value = false
+})
+
+onUnmounted(() => {
+show.value = true
+})
+
+const center = { lat: 40.689247, lng: -74.044502 }
 </script>
+
 
 <template>
     <Head title="About" />
     <Header/>
+    <Transition name="slide-fade">
+        <div v-if="!show">
+            <Content>
+                <template #content-title>
+                    Contact
+                </template>
+                <template #content-body>
+                    <div>
+                        <h1>Contact</h1>
+                        <GoogleMap
+                        api-key="YOUR_GOOGLE_MAPS_API_KEY"
+                        style="width: 100%; height: 500px"
+                        :center="center"
+                        :zoom="15"
+                        >
+                          <Marker :options="{ position: center }" />
+                        </GoogleMap>
+                    </div>
+                </template>
+            </Content>
+        </div>
+    </Transition>
     <!-- start Content about -->
-    <div class="container mx-auto max-w-screen-xl lg:px-6 py-2.5">
+
+    <!-- <div class="container mx-auto max-w-screen-xl lg:px-6 py-2.5">
         <div class="flex justify-between">
            <h1 class="text-2xl font-semibold text-gray-200 w-2/12 bg-blue-900 text-center rounded-t-lg ">{{$page.component}}</h1>
            <Time />
@@ -24,15 +62,15 @@ import Header from '../Layouts/Header.vue';
                 </div>
               </div>
           </div>
-      </div>
-    <div>
+      </div> -->
+    <!-- <div>
         <h1>
             This About Page - {{ name }}
-        </h1>
+        </h1> -->
         <!-- if age nothing -->
         
-        <h1 >
+        <!-- <h1 >
             {{ name }} - {{ age }} years old
         </h1>
-    </div>
+    </div> -->
 </template>

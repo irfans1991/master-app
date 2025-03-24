@@ -33,7 +33,7 @@ class ReportController extends Controller
         }
 
         if ($request->filled(['start_date', 'end_date'])) {
-            $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
+            $query->whereBetween('date_report', [$request->start_date, $request->end_date]);
         }
 
         $reports = $query->get();
@@ -66,6 +66,7 @@ class ReportController extends Controller
                 'deskripsi' => 'required|max:255',
                 'department' => 'sometimes',
                 'uri' => 'required|max:255',
+                'date_report' => 'required'
             ]);
 
         if (!$report->passes()) {
@@ -134,6 +135,7 @@ class ReportController extends Controller
                 'deskripsi' => 'required|max:255',
                 'department' => 'sometimes',
                 'uri' => 'required|max:255',
+                'report_date' => 'required'
             ]);
 
             // Update the report

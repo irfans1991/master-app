@@ -13,6 +13,7 @@ import Button from 'primevue/button';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 import FloatLabel from 'primevue/floatlabel';
+import DatePicker from 'primevue/datepicker';
 
 // Get Data Reports
 const page  = usePage(); // Get data from Laravel
@@ -41,6 +42,7 @@ const formReports = useForm({
     deskripsi: null,
     department: null,
     uri: null,
+    date_report: null
 })
 
 const saveReport = () => {
@@ -62,6 +64,7 @@ const clearInput = () => {
     formReports.deskripsi = '';
     formReports.department = '';
     formReports.uri = '';
+    formReports.date_report = '';
 }
 </script>
 
@@ -96,8 +99,15 @@ const clearInput = () => {
                         <div class="flex p-2 w-full items-center border border-gray-300">
                             <span class="font-bold w-1/2">No Document <span class="text-red-500">*</span></span>
                             <FloatLabel class="w-full" variant="on">
-                            <Select v-model="formReports.no_document" editable :options="doc" optionValue="no_document" optionLabel="no_document" class="w-full" :message="formReports.errors.no_document"/>
-                            <label for="over_label">No Document</label>
+                                <Select v-model="formReports.no_document" editable :options="doc" optionValue="no_document" optionLabel="no_document" class="w-full" :message="formReports.errors.no_document"/>
+                                <label for="over_label">No Document</label>
+                            </FloatLabel>
+                        </div>
+                        <div class="flex p-2 w-full items-center border border-gray-300">
+                            <span class="font-bold w-1/2">Report Date <span class="text-red-500">*</span></span>
+                            <FloatLabel variant="on" class="w-full">
+                                <DatePicker v-model="formReports.date_report" inputId="on_label" showIcon iconDisplay="input" class="w-full"/>
+                                <label for="on_label">Report Date</label>
                             </FloatLabel>
                         </div>
                         <div class="flex p-2 w-full items-center border border-gray-300 bg-gray-200">

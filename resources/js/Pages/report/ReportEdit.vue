@@ -15,6 +15,8 @@
     import Avatar from 'primevue/avatar'; 
     import {getInitials} from "../../components/composables/shortName"
     import Select from 'primevue/select';
+    import FloatLabel from 'primevue/floatlabel';
+    import DatePicker from 'primevue/datepicker';
 
  
     //permission
@@ -54,6 +56,7 @@ const formReportEdit = useForm({
     deskripsi: report.value?.deskripsi || "",
     department: report.value?.department || "",
     uri: report.value?.uri || "",
+    date_report: report.value?.date_report || "",
 });
 
 const formatDate = (date) => {
@@ -142,7 +145,7 @@ const verifiedReport = () => {
                         </div>
                         <div class="flex flex-col">
                             <span class="font-semibold flex justify-between text-gray-600 text-sm" :style="hasPermission('List Comment') ? 'filter: blur(0px);' : 'filter: blur(3px);'">{{val.name}}<span class="text-[9px] text-gray-600 text-center">{{formatDate(val.created_at)}}</span></span>
-                            <span class="bg-gray-300 p-1 text-sm rounded " :style="hasPermission('List Comment') ? 'filter: blur(0px);' : 'filter: blur(3px);'">{{val.comment}}</span>
+                            <span class="bg-gray-300 p-1 text-sm rounded " :style="formReportEdit.department == $page.props.auth.user.department && hasPermission('List Comment') ? 'filter: blur(0px);' : 'filter: blur(3px);'" >{{val.comment}}</span>
                         </div>
                     </div>
                 </div>
@@ -164,6 +167,13 @@ const verifiedReport = () => {
                     <div class="flex p-2 w-full items-center border border-gray-300">
                         <span class="font-bold w-1/2">No Document</span>
                         <TextInput type="text" v-model="formReportEdit.no_document" name="no document" placeholderText="Jhon Doe" class="w-full" :message="formReportEdit.errors.no_document"/>
+                    </div>
+                    <div class="flex p-2 w-full items-center border border-gray-300">
+                        <span class="font-bold w-1/2">Report Date <span class="text-red-500">*</span></span>
+                        <FloatLabel variant="on" class="w-full">
+                            <DatePicker v-model="formReportEdit.date_report" inputId="on_label" showIcon iconDisplay="input" class="w-full"/>
+                            <label for="on_label">Report Date</label>
+                        </FloatLabel>
                     </div>
                     <div class="flex p-2 w-full items-center border border-gray-300 bg-gray-200">
                         <span class="font-bold w-1/2">Description Document</span>
